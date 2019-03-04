@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.support.annotation.Nullable;
+import android.text.BoringLayout;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -12,6 +13,7 @@ public class Practice14GetFontMetricsView extends View {
     Paint paint1 = new Paint(Paint.ANTI_ALIAS_FLAG);
     Paint paint2 = new Paint(Paint.ANTI_ALIAS_FLAG);
     String[] texts = {"A", "a", "J", "j", "Â", "â"};
+    float yOffset = 0;
     int top = 200;
     int bottom = 400;
 
@@ -41,15 +43,17 @@ public class Practice14GetFontMetricsView extends View {
         canvas.drawRect(50, top, getWidth() - 50, bottom, paint1);
 
         // 使用 Paint.getFontMetrics() 计算出文字的显示区域
+        Paint.FontMetrics metrics = paint2.getFontMetrics();
+        yOffset = - (metrics.ascent + metrics.descent)/2;
         // 然后计算出文字的绘制位置，从而让文字上下居中
         // 这种居中算法的优点是，可以让不同的文字的 baseline 对齐
 
         int middle = (top + bottom) / 2;
-        canvas.drawText(texts[0], 100, middle, paint2);
-        canvas.drawText(texts[1], 200, middle, paint2);
-        canvas.drawText(texts[2], 300, middle, paint2);
-        canvas.drawText(texts[3], 400, middle, paint2);
-        canvas.drawText(texts[4], 500, middle, paint2);
-        canvas.drawText(texts[5], 600, middle, paint2);
+        canvas.drawText(texts[0], 100, middle + yOffset, paint2);
+        canvas.drawText(texts[1], 200, middle + yOffset, paint2);
+        canvas.drawText(texts[2], 300, middle + yOffset, paint2);
+        canvas.drawText(texts[3], 400, middle + yOffset, paint2);
+        canvas.drawText(texts[4], 500, middle + yOffset, paint2);
+        canvas.drawText(texts[5], 600, middle + yOffset, paint2);
     }
 }
